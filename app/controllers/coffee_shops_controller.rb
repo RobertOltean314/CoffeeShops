@@ -25,6 +25,15 @@ class CoffeeShopsController < ApplicationController
     head :no_content
   end
 
+  def nearest
+    x = params[:x].to_f
+    y = params[:y].to_f
+
+    closest_shops = CoffeeShop.all.sort_by { |shop| shop.calculate_distance(x, y) }
+
+    render json: { highlight: 3, shops: closest_shops }, status: :ok
+  end
+
   private
 
   def set_coffee_shop
