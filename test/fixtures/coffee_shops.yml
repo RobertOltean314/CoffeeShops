@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  address: MyString
+  x_coordinate: 1.5
+  y_coordinate: 1.5
+  closing_time: 2026-03-30 10:02:55
+
+two:
+  name: MyString
+  address: MyString
+  x_coordinate: 1.5
+  y_coordinate: 1.5
+  closing_time: 2026-03-30 10:02:55
