@@ -11,8 +11,13 @@ class CoffeeShopsController < ApplicationController
   end
 
   def create
-    shop = CoffeeShop.create!(coffee_shop_params)
-    render json: shop, status: :created
+    shop = CoffeeShop.new(coffee_shop_params)
+
+    if shop.save
+      render json: shop, status: :created
+    else
+      render json: { errors: shop.errors.full_messages }, status: :unprocessable_entity
+    end
   end
 
   def update

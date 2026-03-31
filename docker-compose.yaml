@@ -1,7 +1,7 @@
 services:
   server:
     build: .
-    command: bundle exec rails s -b '0.0.0.0'
+    command: bash -c "bundle install && bundle exec rails s -b '0.0.0.0'"
     ports:
       - "3000:3000"
     volumes:
@@ -10,6 +10,8 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    environment:
+      - RAILS_ENV=test
     env_file: ".env"
 
   db:
