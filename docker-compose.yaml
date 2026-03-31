@@ -6,6 +6,7 @@ services:
       - "3000:3000"
     volumes:
       - .:/app
+      - bundle_cache:/usr/local/bundle
     depends_on:
       db:
         condition: service_healthy
@@ -27,6 +28,7 @@ services:
 
 volumes:
   postgres_data:
+  bundle_cache:
 
 
 secrets:
