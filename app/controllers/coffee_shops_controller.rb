@@ -29,7 +29,7 @@ class CoffeeShopsController < ApplicationController
     x = params[:x].to_f
     y = params[:y].to_f
 
-    closest_shops = CoffeeShop.all.sort_by { |shop| shop.calculate_distance(x, y) }
+    closest_shops = coffee_shop_service.calculate_distance(x, y)
 
     render json: { highlight: 3, shops: closest_shops }, status: :ok
   end
@@ -42,5 +42,9 @@ class CoffeeShopsController < ApplicationController
 
   def coffee_shop_params
     params.permit(:name, :address, :x_coordinate, :y_coordinate, :closing_time)
+  end
+
+  def coffee_shop_service
+    @coffee_shops_service ||= CoffeeShopsServices.new
   end
 end
