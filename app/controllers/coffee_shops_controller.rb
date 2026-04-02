@@ -1,5 +1,6 @@
 class CoffeeShopsController < ApplicationController
   before_action :set_coffee_shop, only: %i[show update destroy]
+  allow_unauthenticated_access only: %i[ index show nearest ]
 
   def index
     shops = CoffeeShop.all
@@ -11,18 +12,32 @@ class CoffeeShopsController < ApplicationController
   end
 
   def create
-    shop = CoffeeShop.create!(coffee_shop_params)
-    render json: shop, status: :created
+    if current_user
+      shop = CoffeeShop.create!(coffee_shop_params)
+      render json: shop, status: :created
+    else
+      render json: { error: "Invalid Token" }, status: :unauthorized
+    end
   end
 
   def update
-    @shop.update!(coffee_shop_params)
-    render json: @shop, status: :ok
+    if current_user
+      @shop.update!(coffee_shop_params)
+      render json: @shop, status: :ok
+    else
+      render json: { error: "Invalid Token" }, status: :unauthorized
+    end
   end
 
   def destroy
-    @shop.destroy!
-    head :no_content
+
+    if current_user
+      @shop.destroy!
+      head :no_content
+    else
+      render json: { error: "Invalid Token" }, status: :unauthorized
+    end
+
   end
 
   def nearest
