@@ -2,8 +2,7 @@ class CoffeeShopsController < ApplicationController
   before_action :set_coffee_shop, only: %i[show update destroy]
 
   def index
-    shops = CoffeeShop.all
-    render json: shops, status: :ok
+    render json: CoffeeShop.all, status: :ok
   end
 
   def show
@@ -21,8 +20,11 @@ class CoffeeShopsController < ApplicationController
   end
 
   def update
-    @shop.update!(coffee_shop_params)
-    render json: @shop, status: :ok
+    if @shop.update(coffee_shop_params)
+      render json: @shop, status: :ok
+    else
+      render json: { errors: @shop.errors.full_messages }, status: :unprocessable_entity
+    end
   end
 
   def destroy
@@ -37,6 +39,6 @@ class CoffeeShopsController < ApplicationController
   end
 
   def coffee_shop_params
-    params.permit(:name, :address, :x_coordinate, :y_coordinate, :closing_time)
+    params.require(:coffee_shop).permit(:name, :address, :x_coordinate, :y_coordinate, :closing_time)
   end
 end

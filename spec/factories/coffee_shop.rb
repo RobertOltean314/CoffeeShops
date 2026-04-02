@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :coffee_shop do
+  factory :coffee_shop, class: "CoffeeShop" do
     name { "My Coffee Shop" }
     address { "123 Main St" }
     x_coordinate { 40.7128 }
